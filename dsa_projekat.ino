@@ -6,12 +6,9 @@ const char* password = ""; //YOUR PASSWORD
 
 WebServer server(80);
 
-// Motor 1
 int motor1Pin1 = 27; 
 int motor1Pin2 = 26; 
 int enable1Pin = 14;
-
-// Motor 2
 int motor2Pin1 = 33; 
 int motor2Pin2 = 25; 
 int enable2Pin = 32;
@@ -133,21 +130,17 @@ void handleSpeed() {
 void setup() {
   Serial.begin(115200);
 
-  // Set the Motor pins as outputs
   pinMode(motor1Pin1, OUTPUT);
   pinMode(motor1Pin2, OUTPUT);
   pinMode(motor2Pin1, OUTPUT);
   pinMode(motor2Pin2, OUTPUT);
 
-  // Configure PWM Pins
   ledcAttach(enable1Pin, freq, resolution);
   ledcAttach(enable2Pin, freq, resolution);
     
-  // Initialize PWM with 0 duty cycle
   ledcWrite(enable1Pin, 0);
   ledcWrite(enable2Pin, 0);
   
-  // Connect to Wi-Fi
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
@@ -160,7 +153,6 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // Define routes
   server.on("/", handleRoot);
   server.on("/forward", handleForward);
   server.on("/left", handleLeft);
@@ -169,13 +161,9 @@ void setup() {
   server.on("/reverse", handleReverse);
   server.on("/speed", handleSpeed);
 
-  // Start the server
   server.begin();
 }
 
 void loop() {
   server.handleClient();
 }
-
-
-
